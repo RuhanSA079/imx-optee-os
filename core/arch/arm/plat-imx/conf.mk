@@ -371,8 +371,10 @@ CFG_UART_BASE ?= UART7_BASE
 endif
 
 ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mqevk))
-CFG_DDR_SIZE ?= 0xc0000000
+CFG_DDR_SIZE ?= 0x100000000ULL
 CFG_UART_BASE ?= UART1_BASE
++$(call force,CFG_CORE_LARGE_PHYS_ADDR,y)
++$(call force,CFG_CORE_ARM64_PA_BITS,36)
 endif
 
 ifneq (,$(filter $(PLATFORM_FLAVOR),mx8mmevk))
@@ -541,7 +543,7 @@ CFG_EXTERNAL_DTB_OVERLAY = y
 supported-ta-targets = ta_arm64
 endif
 
-ifneq (,$(filter y, $(CFG_MX8MN) $(CFG_MX8MP) $(CFG_MX8DX) $(CFG_MX8DXL) $(CFG_MX93)))
+ifneq (,$(filter y, $(CFG_MX8MQ) $(CFG_MX8MN) $(CFG_MX8MP) $(CFG_MX8DX) $(CFG_MX8DXL) $(CFG_MX93)))
 CFG_TZDRAM_START ?= ($(CFG_DRAM_BASE) + 0x16000000)
 else ifneq (,$(filter y, $(CFG_MX8ULP)))
 CFG_TZDRAM_START ?= ($(CFG_DRAM_BASE) + 0x26000000)
